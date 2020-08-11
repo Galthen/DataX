@@ -1,4 +1,4 @@
-package kafkawriter;
+package com.alibaba.datax.plugin.writer.kafkawriter;
 
 public class Key {
 //

@@ -1,4 +1,4 @@
-package kafkawriter;
+package com.alibaba.datax.plugin.writer.kafkawriter;
 
 import com.alibaba.datax.common.spi.ErrorCode;
 
