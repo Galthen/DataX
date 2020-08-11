@@ -1,0 +1,6 @@
+{
+    "name": "kafkawriter",
+    "class": "com.alibaba.datax.plugin.writer.kafkawriter.KafkaWriter",
+    "description": "write data to kafka",
+    "developer": "datax"
+}
