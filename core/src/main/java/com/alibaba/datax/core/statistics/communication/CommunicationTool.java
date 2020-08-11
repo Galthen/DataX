@@ -85,6 +85,10 @@ public final class CommunicationTool {
                 communication.getLongCounter(READ_FAILED_RECORDS);
     }
 
+    public static long getReadFailedRecords(final Communication communication) {
+        return communication.getLongCounter(READ_FAILED_RECORDS);
+    }
+
     public static long getTotalReadBytes(final Communication communication) {
         return communication.getLongCounter(READ_SUCCEED_BYTES) +
                 communication.getLongCounter(READ_FAILED_BYTES);
@@ -98,6 +102,14 @@ public final class CommunicationTool {
     public static long getTotalErrorBytes(final Communication communication) {
         return communication.getLongCounter(READ_FAILED_BYTES) +
                 communication.getLongCounter(WRITE_FAILED_BYTES);
+    }
+
+    public static long getTotalWriteRecords(final Communication communication) {
+        return communication.getLongCounter(WRITE_RECEIVED_RECORDS);
+    }
+
+    public static long getWriteFailedRecords(final Communication communication) {
+        return communication.getLongCounter(WRITE_FAILED_RECORDS);
     }
 
     public static long getWriteSucceedRecords(final Communication communication) {

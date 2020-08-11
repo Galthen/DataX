@@ -1,0 +1,6 @@
+{
+    "name": "rediswriter",
+    "class": "com.alibaba.datax.plugin.writer.rediswriter.RedisWriter",
+    "description": "write data to redis",
+    "developer": "datax"
+}

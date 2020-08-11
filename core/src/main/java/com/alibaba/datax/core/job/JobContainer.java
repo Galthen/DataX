@@ -607,7 +607,7 @@ public class JobContainer extends AbstractContainer {
         LOG.info(String.format(
                 "\n" + "%-26s: %-18s\n" + "%-26s: %-18s\n" + "%-26s: %19s\n"
                         + "%-26s: %19s\n" + "%-26s: %19s\n" + "%-26s: %19s\n"
-                        + "%-26s: %19s\n",
+                        + "%-26s: %19s\n" + "%-26s: %19s\n" + "%-26s: %19s\n",
                 "任务启动时刻",
                 dateFormat.format(startTimeStamp),
 
@@ -617,14 +617,17 @@ public class JobContainer extends AbstractContainer {
                 "任务总计耗时",
                 String.valueOf(totalCosts) + "s",
                 "任务平均流量",
-                StrUtil.stringify(byteSpeedPerSecond)
-                        + "/s",
+                StrUtil.stringify(byteSpeedPerSecond) + "/s",
                 "记录写入速度",
-                String.valueOf(recordSpeedPerSecond)
-                        + "rec/s", "读出记录总数",
+                String.valueOf(recordSpeedPerSecond) + "rec/s",
+                "读出记录总数",
                 String.valueOf(CommunicationTool.getTotalReadRecords(communication)),
-                "读写失败总数",
-                String.valueOf(CommunicationTool.getTotalErrorRecords(communication))
+                "读出失败总数",
+                String.valueOf(CommunicationTool.getReadFailedRecords(communication)),
+                "写入记录总数",
+                String.valueOf(CommunicationTool.getTotalWriteRecords(communication)),
+                "写入失败总数",
+                String.valueOf(CommunicationTool.getWriteFailedRecords(communication))
         ));
 
         if (communication.getLongCounter(CommunicationTool.TRANSFORMER_SUCCEED_RECORDS) > 0

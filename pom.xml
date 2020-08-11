@@ -101,6 +101,7 @@
         <module>hbase20xsqlreader</module>
         <module>hbase20xsqlwriter</module>
         <module>kafkawriter</module>
+        <module>rediswriter</module>
     </modules>
 
     <dependencyManagement>

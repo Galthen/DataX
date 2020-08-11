@@ -239,10 +239,12 @@ public abstract class Channel {
     }
 
     private void statPull(long recordSize, long byteSize) {
-        currentCommunication.increaseCounter(
-                CommunicationTool.WRITE_RECEIVED_RECORDS, recordSize);
-        currentCommunication.increaseCounter(
-                CommunicationTool.WRITE_RECEIVED_BYTES, byteSize);
+        if (byteSize > 0) {
+            currentCommunication.increaseCounter(
+                    CommunicationTool.WRITE_RECEIVED_RECORDS, recordSize);
+            currentCommunication.increaseCounter(
+                    CommunicationTool.WRITE_RECEIVED_BYTES, byteSize);
+        }
     }
 
 }
