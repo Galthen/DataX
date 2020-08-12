@@ -52,14 +52,14 @@ public class RedisWriter extends Writer {
         @Override
         public void init() {
             this.taskConfig = super.getPluginJobConf();
-            String writeType = taskConfig.getString(Key.WRITE_TYPE);
+            String type = taskConfig.getString(Key.TYPE);
             String writeMode = taskConfig.getString(Key.WRITE_MODE);
             // 判断是delete还是insert
             if (Constant.WRITE_MODE_DELETE.equalsIgnoreCase(writeMode)) {
                 wirter = new DeleteWriter(taskConfig);
             } else {
                 // 判断写redis的数据类型，string，list，hash
-                switch (writeType) {
+                switch (type) {
                     case Constant.WRITE_TYPE_HASH:
                         wirter = new HashTypeWriter(taskConfig);
                         break;
@@ -73,7 +73,7 @@ public class RedisWriter extends Writer {
                         wirter = new GeoTypeWriter(taskConfig);
                         break;
                     default:
-                        throw DataXException.asDataXException(CommonErrorCode.CONFIG_ERROR, "rediswriter 不支持此数据类型:" + writeType);
+                        throw DataXException.asDataXException(CommonErrorCode.CONFIG_ERROR, "rediswriter 不支持此数据类型:" + type);
                 }
 
             }

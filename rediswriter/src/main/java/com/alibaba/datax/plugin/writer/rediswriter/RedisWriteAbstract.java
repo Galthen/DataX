@@ -74,9 +74,9 @@ public abstract class RedisWriteAbstract {
         if (StringUtils.isNotBlank(colKey) && StringUtils.isBlank(colValue)) {
             throw DataXException.asDataXException(CommonErrorCode.CONFIG_ERROR, "colValue不能为空！请检查配置");
         }
-        String writeType = configuration.getString(Key.WRITE_TYPE);
+        String type = configuration.getString(Key.TYPE);
         // hash类型的colValue配置里面有多个column，要考虑排除获取valueIndex，HashTypeWriter子类单独处理
-        if (!Constant.WRITE_TYPE_HASH.equalsIgnoreCase(writeType)) {
+        if (!Constant.WRITE_TYPE_HASH.equalsIgnoreCase(type)) {
             valueIndex = detailConfig.getConfiguration(Key.COLVALUE).getInt(Key.COL_INDEX);
         }
     }

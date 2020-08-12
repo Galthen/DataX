@@ -10,7 +10,7 @@ public class Key {
     /**
      * 对应redis的数据类型，目前支持四种: string,list,hash,geo
      */
-    public final static String WRITE_TYPE = "type";
+    public final static String TYPE = "type";
 
     /**
      * 对应redis key值的列配置
