@@ -45,7 +45,7 @@ public class Key {
     /**
      * 自定义的redis key值，非列
      */
-    public final static String STRING_KEY = "strKey";
+    public final static String KEY = "key";
 
     /**
      * redis key值的过期时间,单位秒

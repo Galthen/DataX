@@ -16,7 +16,7 @@ public abstract class RedisWriteAbstract {
     protected String keySuffix;
     protected Integer batchSize;
     protected Integer expire;
-    protected String strKey;
+    protected String key;
     protected Integer keyIndex;
     protected Integer valueIndex;
 
@@ -56,19 +56,19 @@ public abstract class RedisWriteAbstract {
         Configuration detailConfig = configuration.getConfiguration(Key.CONFIG);
 
         String colKey = detailConfig.getString(Key.COLKEY, null);
-        String strKey = detailConfig.getString(Key.STRING_KEY, null);
+        String key = detailConfig.getString(Key.KEY, null);
 
-        if ((StringUtils.isBlank(colKey) && StringUtils.isBlank(strKey))) {
-            throw DataXException.asDataXException(CommonErrorCode.CONFIG_ERROR, "strKey或colKey不能为空！请检查配置");
+        if ((StringUtils.isBlank(colKey) && StringUtils.isBlank(key))) {
+            throw DataXException.asDataXException(CommonErrorCode.CONFIG_ERROR, "key或colKey不能为空！请检查配置");
         }
-        if ((StringUtils.isNotBlank(colKey) && StringUtils.isNotBlank(strKey))) {
-            throw DataXException.asDataXException(CommonErrorCode.CONFIG_ERROR, "strKey或colKey不能同时存在！请检查配置");
+        if ((StringUtils.isNotBlank(colKey) && StringUtils.isNotBlank(key))) {
+            throw DataXException.asDataXException(CommonErrorCode.CONFIG_ERROR, "key或colKey不能同时存在！请检查配置");
         }
 
         if (StringUtils.isNotBlank(colKey)) {
             keyIndex = detailConfig.getConfiguration(Key.COLKEY).getInt(Key.COL_INDEX);
         } else {
-            this.strKey = strKey;
+            this.key = key;
         }
         String colValue = detailConfig.getString(Key.COLVALUE, null);
         if (StringUtils.isNotBlank(colKey) && StringUtils.isBlank(colValue)) {

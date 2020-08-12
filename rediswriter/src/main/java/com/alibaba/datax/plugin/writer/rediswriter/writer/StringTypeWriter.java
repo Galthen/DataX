@@ -28,7 +28,7 @@ public class StringTypeWriter extends RedisWriteAbstract {
                 redisKey = keyPreffix + key + keySuffix;
                 redisValue = record.getColumn(valueIndex).asString();
             } else {
-                redisKey = keyPreffix + strKey + keySuffix;
+                redisKey = keyPreffix + key + keySuffix;
                 redisValue = record.getColumn(valueIndex).asString();
             }
             pipelined.set(redisKey, redisValue);

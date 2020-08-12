@@ -32,7 +32,7 @@ public class HashTypeWriter extends RedisWriteAbstract {
                 String key = record.getColumn(keyIndex).asString();
                 redisKey = keyPreffix + key + keySuffix;
             } else {
-                redisKey = keyPreffix + strKey + keySuffix;
+                redisKey = keyPreffix + key + keySuffix;
             }
             // hash类型已数据源column名作为filed
             for (Configuration hashFieldIndex : hashFieldIndexs) {

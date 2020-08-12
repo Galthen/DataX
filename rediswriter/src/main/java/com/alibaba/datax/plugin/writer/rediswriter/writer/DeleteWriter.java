@@ -13,7 +13,7 @@ public class DeleteWriter extends RedisWriteAbstract {
     // 要删除的hash的域名称
     String hashFileds;
     Integer keyIndex;
-    String strKey;
+    String key;
 
     public DeleteWriter(Configuration configuration) {
         super(configuration);
@@ -23,9 +23,9 @@ public class DeleteWriter extends RedisWriteAbstract {
     public void checkAndGetParams() {
         Configuration detailConfig = configuration.getConfiguration(Key.CONFIG);
         String colKey = detailConfig.getString(Key.COLKEY, null);
-        this.strKey = detailConfig.getString(Key.STRING_KEY, null);
-        if ((StringUtils.isBlank(colKey)) && StringUtils.isBlank(strKey)) {
-            throw DataXException.asDataXException(CommonErrorCode.CONFIG_ERROR, "strKey或colKey不能为空！请检查配置");
+        this.key = detailConfig.getString(Key.KEY, null);
+        if ((StringUtils.isBlank(colKey)) && StringUtils.isBlank(key)) {
+            throw DataXException.asDataXException(CommonErrorCode.CONFIG_ERROR, "key或colKey不能为空！请检查配置");
         }
         if (StringUtils.isNotBlank(colKey)) {
             this.keyIndex = detailConfig.getConfiguration(Key.COLKEY).getInt(Key.COL_INDEX);

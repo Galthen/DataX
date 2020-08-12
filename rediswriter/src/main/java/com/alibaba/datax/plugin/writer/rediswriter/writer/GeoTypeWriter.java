@@ -42,7 +42,7 @@ public class GeoTypeWriter extends RedisWriteAbstract {
                 String key = record.getColumn(keyIndex).asString();
                 redisKey = keyPreffix + key + keySuffix;
             } else {
-                redisKey = keyPreffix + strKey + keySuffix;
+                redisKey = keyPreffix + key + keySuffix;
             }
 
             for (Configuration geoFieldIndex : geoFieldIndexs) {

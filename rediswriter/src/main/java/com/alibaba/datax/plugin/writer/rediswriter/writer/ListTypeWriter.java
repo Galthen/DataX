@@ -44,7 +44,7 @@ public class ListTypeWriter extends RedisWriteAbstract {
                 String key = record.getColumn(keyIndex).asString();
                 redisKey = keyPreffix + key + keySuffix;
             } else {
-                redisKey = keyPreffix + strKey + keySuffix;
+                redisKey = keyPreffix + key + keySuffix;
             }
             columnValue = record.getColumn(valueIndex).asString();
             String[] redisValue = columnValue.split(valueDelimiter);
