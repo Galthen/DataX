@@ -78,7 +78,7 @@
   - 必选：否
   - 默认值：insert
 - <b>writeType</b>
-  - 描述：对应redis的数据类型，目前支持三种: string,list,hash,geo
+  - 描述：对应redis的数据类型，目前支持四种: string,list,hash,geo
   - 必选：是
   - 默认值：无
 - <b>strKey</b>
