@@ -118,6 +118,6 @@
   - 必选：否
   - 默认值：无
 - <b>hashFields</b>
-  - 描述：hash类型要删除的field，次参数只对删除hash类型的field时有效
+  - 描述：hash类型要删除的field，此参数只对删除hash类型的field时有效
   - 必选：否
   - 默认值：无
