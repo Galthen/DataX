@@ -36,7 +36,7 @@
                       "parameter": {
                           "redisMode": "cluster",
                           "address": "192.168.33.205:6379, 192.168.33.205:6380, 192.168.33.205:6381, 192.168.33.206:6382, 192.168.33.206:6383, 192.168.33.206:6384",
-                          "writeType": "string",
+                          "type": "string",
                           "config": {
                               "colKey": {
                                   "name": "id",
@@ -77,7 +77,7 @@
   - 描述：操作类型，delete和insert
   - 必选：否
   - 默认值：insert
-- <b>writeType</b>
+- <b>type</b>
   - 描述：对应redis的数据类型，目前支持四种: string,list,hash,geo
   - 必选：是
   - 默认值：无
