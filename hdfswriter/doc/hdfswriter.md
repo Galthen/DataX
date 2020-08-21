@@ -187,6 +187,7 @@ HdfsWriter提供向HDFS文件系统指定路径中写入TEXTFile文件和ORCFile
 	* 必选：是 <br />
 
 	* 默认值：无 <br />
+	
 * **path**
 
 	* 描述：存储到Hadoop hdfs文件系统的路径信息，HdfsWriter会根据并发配置在Path目录下写入多个文件。为与hive表关联，请填写hive表在hdfs上的存储路径。例：Hive上设置的数据仓库的存储路径为：/user/hive/warehouse/ ，已建立数据库：test，表：hello；则对应的存储路径为：/user/hive/warehouse/test.db/hello  <br />
@@ -197,11 +198,16 @@ HdfsWriter提供向HDFS文件系统指定路径中写入TEXTFile文件和ORCFile
 
 * **fileName**
 
- 	* 描述：HdfsWriter写入时的文件名，实际执行时会在该文件名后添加随机的后缀作为每个线程写入实际文件名。 <br />
+       * 描述：HdfsWriter写入时的文件名，实际执行时会在该文件名后添加随机的后缀作为每个线程写入实际文件名。 <br />
+     * 必选：是 <br />
+     * 默认值：无 <br />
 
-	* 必选：是 <br />
+* <b>columnSwitch</b>
 
-	* 默认值：无 <br />
+     * 描述：是否需要column信息，默认需要 <br />
+     * 必选：否 <br />
+     * 默认值：true <br />
+
 * **column**
 
 	* 描述：写入数据的字段，不支持对部分列写入。为与hive中表关联，需要指定表中所有字段名和字段类型，其中：name指定字段名，type指定字段类型。 <br />
@@ -222,9 +228,10 @@ HdfsWriter提供向HDFS文件系统指定路径中写入TEXTFile文件和ORCFile
                  ]
 		```
 
-	* 必选：是 <br />
+	* 必选：否 <br />
 
 	* 默认值：无 <br />
+	
 * **writeMode**
 
  	* 描述：hdfswriter写入前数据清理处理模式： <br />
@@ -281,11 +288,11 @@ HdfsWriter提供向HDFS文件系统指定路径中写入TEXTFile文件和ORCFile
 * **haveKerberos**
 
 	* 描述：是否有Kerberos认证，默认false<br />
- 
+
 		 例如如果用户配置true，则配置项kerberosKeytabFilePath，kerberosPrincipal为必填。
 
  	* 必选：haveKerberos 为true必选 <br />
- 
+
  	* 默认值：false <br />
 
 * **kerberosKeytabFilePath**
@@ -293,7 +300,7 @@ HdfsWriter提供向HDFS文件系统指定路径中写入TEXTFile文件和ORCFile
 	* 描述：Kerberos认证 keytab文件路径，绝对路径<br />
 
  	* 必选：否 <br />
- 
+
  	* 默认值：无 <br />
 
 * **kerberosPrincipal**
@@ -301,7 +308,7 @@ HdfsWriter提供向HDFS文件系统指定路径中写入TEXTFile文件和ORCFile
 	* 描述：Kerberos认证Principal名，如xxxx/hadoopclient@xxx.xxx <br />
 
  	* 必选：haveKerberos 为true必选 <br />
- 
+
  	* 默认值：无 <br />
 
 

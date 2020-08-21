@@ -12,8 +12,13 @@ public class Key {
     public final static String FILE_TYPE = "fileType";
     // must have
     public static final String FILE_NAME = "fileName";
+
+    // column配置开关
+    public static final String COLUMN_SWITCH = "columnSwitch";
+
     // must have for column
     public static final String COLUMN = "column";
+
     public static final String NAME = "name";
     public static final String TYPE = "type";
     public static final String DATE_FORMAT = "dateFormat";
