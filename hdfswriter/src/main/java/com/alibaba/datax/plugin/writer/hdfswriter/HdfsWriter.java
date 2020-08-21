@@ -69,15 +69,16 @@ public class HdfsWriter extends Writer {
             //fileName
             this.fileName = this.writerSliceConfig.getNecessaryValue(Key.FILE_NAME, HdfsWriterErrorCode.REQUIRED_VALUE);
             //columns check
-            this.columns = this.writerSliceConfig.getListConfiguration(Key.COLUMN);
-            if (null == columns || columns.size() == 0) {
-                throw DataXException.asDataXException(HdfsWriterErrorCode.REQUIRED_VALUE, "您需要指定 columns");
-            }else{
-                for (Configuration eachColumnConf : columns) {
-                    eachColumnConf.getNecessaryValue(Key.NAME, HdfsWriterErrorCode.COLUMN_REQUIRED_VALUE);
-                    eachColumnConf.getNecessaryValue(Key.TYPE, HdfsWriterErrorCode.COLUMN_REQUIRED_VALUE);
-                }
-            }
+//支持不写columns配置
+//            this.columns = this.writerSliceConfig.getListConfiguration(Key.COLUMN);
+//            if (null == columns || columns.size() == 0) {
+//                throw DataXException.asDataXException(HdfsWriterErrorCode.REQUIRED_VALUE, "您需要指定 columns");
+//            }else{
+//                for (Configuration eachColumnConf : columns) {
+//                    eachColumnConf.getNecessaryValue(Key.NAME, HdfsWriterErrorCode.COLUMN_REQUIRED_VALUE);
+//                    eachColumnConf.getNecessaryValue(Key.TYPE, HdfsWriterErrorCode.COLUMN_REQUIRED_VALUE);
+//                }
+//            }
             //writeMode check
             this.writeMode = this.writerSliceConfig.getNecessaryValue(Key.WRITE_MODE, HdfsWriterErrorCode.REQUIRED_VALUE);
             writeMode = writeMode.toLowerCase().trim();
