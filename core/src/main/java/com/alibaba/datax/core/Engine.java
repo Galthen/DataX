@@ -49,7 +49,7 @@ public class Engine {
         boolean isJob = !("taskGroup".equalsIgnoreCase(allConf
                 .getString(CoreConstant.DATAX_CORE_CONTAINER_MODEL)));
         //JobContainer会在schedule后再行进行设置和调整值
-        int channelNumber =0;
+        int channelNumber = 0;
         AbstractContainer container;
         long instanceId;
         int taskGroupId = -1;
@@ -74,21 +74,21 @@ public class Engine {
         boolean perfReportEnable = allConf.getBool(CoreConstant.DATAX_CORE_REPORT_DATAX_PERFLOG, true);
 
         //standlone模式的datax shell任务不进行汇报
-        if(instanceId == -1){
+        if (instanceId == -1) {
             perfReportEnable = false;
         }
 
         int priority = 0;
         try {
             priority = Integer.parseInt(System.getenv("SKYNET_PRIORITY"));
-        }catch (NumberFormatException e){
-            LOG.warn("prioriy set to 0, because NumberFormatException, the value is: "+System.getProperty("PROIORY"));
+        } catch (NumberFormatException e) {
+            LOG.warn("prioriy set to 0, because NumberFormatException, the value is: " + System.getProperty("PROIORY"));
         }
 
         Configuration jobInfoConfig = allConf.getConfiguration(CoreConstant.DATAX_JOB_JOBINFO);
         //初始化PerfTrace
         PerfTrace perfTrace = PerfTrace.getInstance(isJob, instanceId, taskGroupId, priority, traceEnable);
-        perfTrace.setJobInfo(jobInfoConfig,perfReportEnable,channelNumber);
+        perfTrace.setJobInfo(jobInfoConfig, perfReportEnable, channelNumber);
         container.start();
 
     }
@@ -102,12 +102,12 @@ public class Engine {
 
         filterSensitiveConfiguration(jobContent);
 
-        jobConfWithSetting.set("content",jobContent);
+        jobConfWithSetting.set("content", jobContent);
 
         return jobConfWithSetting.beautify();
     }
 
-    public static Configuration filterSensitiveConfiguration(Configuration configuration){
+    public static Configuration filterSensitiveConfiguration(Configuration configuration) {
         Set<String> keys = configuration.getKeys();
         for (final String key : keys) {
             boolean isSensitive = StringUtils.endsWithIgnoreCase(key, "password")
@@ -174,8 +174,8 @@ public class Engine {
 
     /**
      * -1 表示未能解析到 jobId
-     *
-     *  only for dsc & ds & datax 3 update
+     * <p>
+     * only for dsc & ds & datax 3 update
      */
     private static long parseJobIdFromUrl(List<String> patternStringList, String url) {
         long result = -1;
@@ -212,6 +212,11 @@ public class Engine {
                 if (errorCode instanceof FrameworkErrorCode) {
                     FrameworkErrorCode tempErrorCode = (FrameworkErrorCode) errorCode;
                     exitCode = tempErrorCode.toExitValue();
+                }
+
+                // 需求方的特殊需求：hdfsreader的目录不存在数据文件时，默认返回成功。
+                if ("HdfsReader-08".equals(errorCode.getCode())) {
+                    exitCode = 0;
                 }
             }
 
