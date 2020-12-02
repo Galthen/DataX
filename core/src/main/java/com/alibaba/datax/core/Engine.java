@@ -213,11 +213,6 @@ public class Engine {
                     FrameworkErrorCode tempErrorCode = (FrameworkErrorCode) errorCode;
                     exitCode = tempErrorCode.toExitValue();
                 }
-
-                // 需求方的特殊需求：hdfsreader的目录不存在数据文件时，默认返回成功。
-                if ("HdfsReader-08".equals(errorCode.getCode())) {
-                    exitCode = 0;
-                }
             }
 
             System.exit(exitCode);
