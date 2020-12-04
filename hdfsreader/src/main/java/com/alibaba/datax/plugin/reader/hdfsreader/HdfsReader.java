@@ -179,7 +179,7 @@ public class HdfsReader extends Reader {
             List<Configuration> readerSplitConfigs = new ArrayList<Configuration>();
             // warn:每个slice拖且仅拖一个文件,
             // int splitNumber = adviceNumber;
-            int splitNumber = this.sourceFiles.size();
+            int splitNumber = adviceNumber > 0 ? adviceNumber : this.sourceFiles.size();
             if (0 == splitNumber) {
                 throw DataXException.asDataXException(HdfsReaderErrorCode.EMPTY_DIR_EXCEPTION,
                         String.format("未能找到待读取的文件,请确认您的配置项path: %s", this.readerOriginConfig.getString(Key.PATH)));
