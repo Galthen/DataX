@@ -182,6 +182,7 @@ public class CommonRdbmsWriter {
         protected String jdbcUrl;
         protected String table;
         protected List<String> columns;
+        protected List<String> values;
         protected List<String> preSqls;
         protected List<String> postSqls;
         protected int batchSize;
@@ -225,7 +226,20 @@ public class CommonRdbmsWriter {
             this.table = writerSliceConfig.getString(Key.TABLE);
 
             this.columns = writerSliceConfig.getList(Key.COLUMN, String.class);
+            this.values = writerSliceConfig.getList(Key.VALUE, String.class);
+
             this.columnNumber = this.columns.size();
+
+            // 根据values中的"?"判断写入字段的数量，用于跟来源字段数比较
+            if (this.values != null && this.values.size() > 0) {
+                int valueNumber = 0;
+                for (String value : this.values) {
+                    if ("?".equals(value)) {
+                        valueNumber = valueNumber + 1;
+                    }
+                }
+                this.columnNumber = valueNumber;
+            }
 
             this.preSqls = writerSliceConfig.getList(Key.PRE_SQL, String.class);
             this.postSqls = writerSliceConfig.getList(Key.POST_SQL, String.class);
@@ -400,7 +414,7 @@ public class CommonRdbmsWriter {
         // 直接使用了两个类变量：columnNumber,resultSetMetaData
         protected PreparedStatement fillPreparedStatement(PreparedStatement preparedStatement, Record record)
                 throws SQLException {
-            for (int i = 0; i < this.columnNumber; i++) {
+            for (int i = 0; i < record.getColumnNumber(); i++) {
                 int columnSqltype = this.resultSetMetaData.getMiddle().get(i);
                 preparedStatement = fillPreparedStatementColumnType(preparedStatement, i, columnSqltype, record.getColumn(i));
             }

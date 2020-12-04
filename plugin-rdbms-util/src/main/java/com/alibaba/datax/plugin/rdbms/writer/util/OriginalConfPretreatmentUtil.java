@@ -3,7 +3,12 @@ package com.alibaba.datax.plugin.rdbms.writer.util;
 import com.alibaba.datax.common.exception.DataXException;
 import com.alibaba.datax.common.util.Configuration;
 import com.alibaba.datax.common.util.ListUtil;
-import com.alibaba.datax.plugin.rdbms.util.*;
+import com.alibaba.datax.plugin.rdbms.util.ConnectionFactory;
+import com.alibaba.datax.plugin.rdbms.util.DBUtil;
+import com.alibaba.datax.plugin.rdbms.util.DBUtilErrorCode;
+import com.alibaba.datax.plugin.rdbms.util.DataBaseType;
+import com.alibaba.datax.plugin.rdbms.util.JdbcConnectionFactory;
+import com.alibaba.datax.plugin.rdbms.util.TableExpandUtil;
 import com.alibaba.datax.plugin.rdbms.writer.Constant;
 import com.alibaba.datax.plugin.rdbms.writer.Key;
 import org.apache.commons.lang3.StringUtils;
@@ -99,10 +104,10 @@ public final class OriginalConfPretreatmentUtil {
         } else {
             boolean isPreCheck = originalConfig.getBool(Key.DRYRUN, false);
             List<String> allColumns;
-            if (isPreCheck){
-                allColumns = DBUtil.getTableColumnsByConn(DATABASE_TYPE,connectionFactory.getConnecttionWithoutRetry(), oneTable, connectionFactory.getConnectionInfo());
-            }else{
-                allColumns = DBUtil.getTableColumnsByConn(DATABASE_TYPE,connectionFactory.getConnecttion(), oneTable, connectionFactory.getConnectionInfo());
+            if (isPreCheck) {
+                allColumns = DBUtil.getTableColumnsByConn(DATABASE_TYPE, connectionFactory.getConnecttionWithoutRetry(), oneTable, connectionFactory.getConnectionInfo());
+            } else {
+                allColumns = DBUtil.getTableColumnsByConn(DATABASE_TYPE, connectionFactory.getConnecttion(), oneTable, connectionFactory.getConnectionInfo());
             }
 
             LOG.info("table:[{}] all columns:[\n{}\n].", oneTable,
@@ -122,7 +127,7 @@ public final class OriginalConfPretreatmentUtil {
                 ListUtil.makeSureNoValueDuplicate(userConfiguredColumns, false);
 
                 // 检查列是否都为数据库表中正确的列（通过执行一次 select column from table 进行判断）
-                DBUtil.getColumnMetaData(connectionFactory.getConnecttion(), oneTable,StringUtils.join(userConfiguredColumns, ","));
+                DBUtil.getColumnMetaData(connectionFactory.getConnecttion(), oneTable, StringUtils.join(userConfiguredColumns, ","));
             }
         }
     }
@@ -150,8 +155,14 @@ public final class OriginalConfPretreatmentUtil {
         String writeMode = originalConfig.getString(Key.WRITE_MODE, "INSERT");
 
         List<String> valueHolders = new ArrayList<String>(columns.size());
+        List<String> values = originalConfig.getList(Key.VALUE, String.class);
+
         for (int i = 0; i < columns.size(); i++) {
-            valueHolders.add("?");
+            if (values != null && values.size() > 0) {
+                valueHolders.add(values.get(i));
+            } else {
+                valueHolders.add("?");
+            }
         }
 
         boolean forceUseUpdate = false;
@@ -160,7 +171,7 @@ public final class OriginalConfPretreatmentUtil {
             forceUseUpdate = true;
         }
 
-        String writeDataSqlTemplate = WriterUtil.getWriteTemplate(columns, valueHolders, writeMode,dataBaseType, forceUseUpdate);
+        String writeDataSqlTemplate = WriterUtil.getWriteTemplate(columns, valueHolders, writeMode, dataBaseType, forceUseUpdate);
 
         LOG.info("Write data [\n{}\n], which jdbcUrl like:[{}]", writeDataSqlTemplate, jdbcUrl);
 

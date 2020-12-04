@@ -81,6 +81,11 @@ MysqlWriter 通过 DataX 框架获取 Reader 生成的协议数据，根据你�
                             "id",
                             "name"
                         ],
+                        "value": [
+                            "?",
+							"1",
+                            "'hello'"
+                        ],
                         "session": [
                         	"set session sql_mode='ANSI'"
                         ],
@@ -157,6 +162,20 @@ MysqlWriter 通过 DataX 框架获取 Reader 生成的协议数据，根据你�
 	* 必选：是 <br />
 
 	* 默认值：否 <br />
+
+* **value**
+
+	* 描述：目的表需要写入数据的值，值之间用英文逗号分隔，支持常量值。例如: "value": ["?","1","'hello'"]。
+
+			````
+注意：数字为"1"，字符为"'hello'"，类似insert语句的values，根据类型有单引号的区别。
+     ````
+     
+* 必选：否 <br />
+	
+* 默认值：? <br />
+
+
 
 * **session**
 
