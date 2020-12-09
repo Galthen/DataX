@@ -141,14 +141,21 @@ public abstract class Channel {
 
     public Record pull() {
         Record record = this.doPull();
-        this.statPull(1L, record.getByteSize());
+
+        // record为终止对象时，该记录不算入统计数量
+        if (!(record instanceof TerminateRecord)) {
+            this.statPull(1L, record.getByteSize());
+        }
         return record;
     }
 
     public void pullAll(final Collection<Record> rs) {
         Validate.notNull(rs);
         this.doPullAll(rs);
-        this.statPull(rs.size(), this.getByteSize(rs));
+
+        // record为终止对象时，该记录不算入统计数量
+        long recordSize = rs.stream().filter(record -> !(record instanceof TerminateRecord)).count();
+        this.statPull(recordSize, this.getByteSize(rs));
     }
 
     protected abstract void doPush(Record r);
@@ -239,12 +246,10 @@ public abstract class Channel {
     }
 
     private void statPull(long recordSize, long byteSize) {
-        if (byteSize > 0) {
-            currentCommunication.increaseCounter(
-                    CommunicationTool.WRITE_RECEIVED_RECORDS, recordSize);
-            currentCommunication.increaseCounter(
-                    CommunicationTool.WRITE_RECEIVED_BYTES, byteSize);
-        }
+        currentCommunication.increaseCounter(
+                CommunicationTool.WRITE_RECEIVED_RECORDS, recordSize);
+        currentCommunication.increaseCounter(
+                CommunicationTool.WRITE_RECEIVED_BYTES, byteSize);
     }
 
 }
