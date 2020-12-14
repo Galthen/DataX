@@ -254,11 +254,6 @@ public class UnstructuredStorageReaderUtil {
         Character fieldDelimiter = null;
         String delimiterInStr = readerSliceConfig
                 .getString(Key.FIELD_DELIMITER);
-        if (null != delimiterInStr && 1 != delimiterInStr.length()) {
-            throw DataXException.asDataXException(
-                    UnstructuredStorageReaderErrorCode.ILLEGAL_VALUE,
-                    String.format("仅仅支持单字符切分, 您配置的切分为 : [%s]", delimiterInStr));
-        }
         if (null == delimiterInStr) {
             LOG.warn(String.format("您没有配置列分隔符, 使用默认值[%s]",
                     Constant.DEFAULT_FIELD_DELIMITER));
@@ -288,6 +283,7 @@ public class UnstructuredStorageReaderUtil {
                 LOG.info(String.format("Header line %s has been skiped.",
                         fetchLine));
             }
+            LOG.info(fieldDelimiter.toString());
             csvReader = new CsvReader(reader);
             csvReader.setDelimiter(fieldDelimiter);
             csvReader.setUseTextQualifier(false);
