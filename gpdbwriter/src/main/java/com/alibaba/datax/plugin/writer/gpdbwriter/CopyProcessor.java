@@ -55,6 +55,7 @@ public class CopyProcessor implements Callable<Long> {
 			}
 
 			if (record.getColumnNumber() != this.columnNumber) {
+				LOG.warn(record.toString());
 				// 源头读取字段列数与目的表字段写入列数不相等，直接报错
 				throw DataXException.asDataXException(DBUtilErrorCode.CONF_ERROR,
 						String.format("列配置信息有错误. 因为您配置的任务中，源头读取字段数:%s 与 目的表要写入的字段数:%s 不相等. 您可能配置了错误的表名称, 请检查您的配置并作出修改.",
