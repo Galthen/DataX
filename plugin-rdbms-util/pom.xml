@@ -30,7 +30,7 @@
 		<dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.45</version>
+            <version>${mysql.driver.version}</version>
             <scope>test</scope>
         </dependency>
 		<dependency>
@@ -63,5 +63,12 @@
             <artifactId>guava</artifactId>
             <version>r05</version>
         </dependency>
-    </dependencies>
+ 		<dependency>
+ 			<groupId>com.alipay.oceanbase</groupId>
+ 			<artifactId>oceanbase-client</artifactId>
+ 			<version>1.1.10</version>
+ 			<scope>system</scope>
+ 			<systemPath>${basedir}/src/main/libs/oceanbase-client-1.1.10.jar</systemPath>
+ 		</dependency>
+	</dependencies>
 </project>
